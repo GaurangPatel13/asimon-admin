@@ -97,20 +97,43 @@ const AllPlans = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this plan?")) return;
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Delete",
+    cancelButtonText: "Cancel",
+  });
 
+  if (result.isConfirmed) {
     try {
       setLoading(true);
       const response = await deletePlan(id);
       if (response.success) {
+        await Swal.fire({
+          title: "Deleted!",
+          text: "Plan deleted successfully.",
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+        });
         fetchPlansList();
       }
     } catch (error) {
       console.error("Error deleting plan:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "There was a problem deleting the plan.",
+        icon: "error",
+      });
     } finally {
       setLoading(false);
     }
-  };
+  }
+};
+
 
   const handleUserStatus = async (id, newstatus) => {
     try {
@@ -253,8 +276,8 @@ const AllPlans = () => {
               </td>
             </>
           )}
-          searchKeys={["name", "username"]}
-          searchKey="name and FCID"
+          searchKeys={["name"]}
+          searchKey="name"
         />
       </div>
     </>
