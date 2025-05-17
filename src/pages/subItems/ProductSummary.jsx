@@ -3,7 +3,11 @@ import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import ButtonWithIcon from "../../components/ButtonWithIcon";
 import TableComponent from "../../components/TableComponent";
-import { deleteProduct, getAllProducts, updateStockStatus } from "../../api/admin-api";
+import {
+  deleteProduct,
+  getAllProducts,
+  updateStockStatus,
+} from "../../api/admin-api";
 import Swal from "sweetalert2";
 import PageLoader from "../../components/ui/PageLoader";
 import ProductForm from "../AddProductManagement/ProductForm";
@@ -21,7 +25,7 @@ const ProductSummary = () => {
       try {
         setLoading(true);
         const response = await getAllProducts();
-        setProducts(response?.data);
+        setProducts(response?.products);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -34,22 +38,18 @@ const ProductSummary = () => {
   const headers = [
     "S.No",
     "Name",
-    "Category ID",
-    "DP",
-    "SP",
-    "MRP",
-    "PV",
-    "Stock",
+    "Category",
     "Image",
+    "MRP",
+    "Stock",
     "Active",
-    "Action"
   ];
 
   const handleDelete = async (id) => {
     try {
       setLoading(true);
       await deleteProduct(id);
-      setProducts(prev => prev.filter((p) => p._id !== id));
+      setProducts((prev) => prev.filter((p) => p._id !== id));
       Swal.fire("Deleted!", "Product has been deleted.", "success");
     } catch (err) {
       console.error("Delete error:", err);
@@ -63,9 +63,7 @@ const ProductSummary = () => {
       setLoading(true);
       await updateStockStatus(id);
       setProducts((prev) =>
-        prev.map((p) =>
-          p._id === id ? { ...p, isActive: !p.isActive } : p
-        )
+        prev.map((p) => (p._id === id ? { ...p, isActive: !p.isActive } : p))
       );
     } catch (err) {
       console.error("Stock status error:", err);
@@ -94,12 +92,9 @@ const ProductSummary = () => {
               <>
                 <td className="border p-2">{index + 1}</td>
                 <td className="border p-2">{item?.name}</td>
-                <td className="border p-2">{item?.category?.name}</td>
-                <td className="border p-2">{item?.dp}</td>
-                <td className="border p-2">{item?.sp}</td>
-                <td className="border p-2">{item?.mrp}</td>
-                <td className="border p-2">{item?.pv}</td>
-                <td className="border p-2">{item?.stock}</td>
+                <td className="border p-2">
+                  {item?.category?.name || item?.category}
+                </td>
                 <td className="border p-2">
                   {item?.images?.[0] ? (
                     <img
@@ -111,34 +106,24 @@ const ProductSummary = () => {
                     "No Image"
                   )}
                 </td>
+                <td className="border p-2">{item?.mrp}</td>
+                <td className="border p-2">{item?.stock}</td>
                 <td className="border p-2">
                   <ToggleButton
                     isEnabled={item?.isActive}
                     onToggle={() => handleStockStatus(item._id)}
                   />
                 </td>
-                <td className="border p-2">
-                  <div className="flex gap-2">
-                    <ButtonWithIcon
-                      title="Edit"
-                      icon={<BiEdit />}
-                      onClick={() => handleEdit(item)}
-                      bgcolor="bg-green-500"
-                    />
-                    <ButtonWithIcon
-                      title="Delete"
-                      icon={<RiDeleteBin6Line />}
-                      onClick={() => handleDelete(item._id)}
-                      bgcolor="bg-red-500"
-                    />
-                  </div>
-                </td>
               </>
             )}
           />
         </div>
       </div>
-      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} title="Update Product">
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        title="Update Product"
+      >
         <ProductForm productData={selectedProduct} isEditMode={true} />
       </Modal>
     </>

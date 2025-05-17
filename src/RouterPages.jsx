@@ -38,6 +38,7 @@ import AllFranchisees from "./pages/AllFranchisees";
 import ProductSummary from "./pages/subItems/ProductSummary";
 import CreatePlan from "./pages/CreatePlan/CreatePlan";
 import AllPlans from "./pages/CreatePlan/AllPlans";
+import PlanSales from "./pages/CreatePlan/PlanSales";
 
 
 const RoutersPages = () => {
@@ -58,6 +59,7 @@ const RoutersPages = () => {
                 <Route index element={<Dashboard />} />
                 <Route path={Routers.createPlans} element={<CreatePlan />} />
                 <Route path={Routers.allPlans} element={<AllPlans />} />
+                <Route path={Routers.allPlansSales} element={<PlanSales />} />
 
               <Route
                 path={Routers.REFERRAL_MANAGEMENT}
@@ -82,13 +84,13 @@ const RoutersPages = () => {
               <Route path={Routers.modify} element={<Modify />} />
               <Route path={Routers.AllUsers} element={<AllUsers />} />
               <Route path={Routers.ViewProfile} element={<ViewProfile />} />
-              <Route path={Routers.AddCategory} element={<AddCategory />} />
+              {/* <Route path={Routers.AddCategory} element={<AddCategory />} /> */}
 
               <Route path={Routers.duc} element={<DUC />} />
               <Route path={Routers.mqc} element={<MQC />} />
               <Route path={Routers.productSummary} element={<ProductSummary />} />
               <Route path={Routers.addfund} element={<AddFund />} />
-              <Route path={Routers.fundHistory} element={<FundHistory />} />
+              <Route path={Routers.userTransactionHistory} element={<FundHistory />} />
               <Route path={Routers.fundrequest} element={<FundRequest />} />
               <Route path={Routers.walletholder} element={<WalletHolder />} />
               <Route path={Routers.teamsale} element={<TeamSale />} />

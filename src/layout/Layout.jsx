@@ -55,6 +55,7 @@ const Layout = () => {
       subRoutes: [
         { label: "Create Plans", path: `${Routers.createPlans}`, icon: <MdAutoGraph size={16} /> },
         { label: "All Plans", path: `${Routers.allPlans}`, icon: <FaUserEdit size={16} /> },
+        { label: "Plan Sale", path: `${Routers.allPlansSales}`, icon: <FaUserEdit size={16} /> },
 
       ],
     },
@@ -83,7 +84,7 @@ const Layout = () => {
       icon: <BiSolidShoppingBags />,
       subRoutes: [
         { label: "Add Product", path: `${Routers.AddProduct}`, icon: <FiShoppingCart size={16} /> },
-        { label: "Add Category", path: `${Routers.AddCategory}`, icon: <MdOutlineCategory size={16} /> },
+        // { label: "Add Category", path: `${Routers.AddCategory}`, icon: <MdOutlineCategory size={16} /> },
         { label: "Product Summary", path: `${Routers.productSummary}`, icon: <AiOutlineHistory size={16} /> },
       ],
     },
@@ -94,7 +95,7 @@ const Layout = () => {
       subRoutes: [
         { label: "Add Fund", path: `${Routers.addfund}`, icon: <GiReceiveMoney size={16} /> },
         { label: "Fund Request", path: `${Routers.fundrequest}`, icon: <MdOutlineRequestQuote size={16} /> },
-        { label: "Fund History", path: `${Routers.fundHistory}`, icon: <AiOutlineHistory size={16} /> },
+        { label: "User Transaction History", path: `${Routers.userTransactionHistory}`, icon: <AiOutlineHistory size={16} /> },
         { label: "Wallet Holder ", path: `${Routers.walletholder}`, icon: <FaWallet size={16} /> },
       ],
     },

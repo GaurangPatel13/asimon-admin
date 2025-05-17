@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getFundRequest } from '../../api/admin-api';
+import { getTransactionRequest } from '../../api/admin-api';
 import TableComponent from '../../components/TableComponent';
 
 const FundRequest = () => {

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import TableComponent from '../../components/TableComponent';
-import { getFundRequest } from '../../api/admin-api';
+import React, { useEffect, useState } from "react";
+import TableComponent from "../../components/TableComponent";
+import { getTransactionRequest } from "../../api/admin-api";
 
 const FundHistory = () => {
   const [filters, setFilters] = useState({
-    memberId: '',
-    fromDate: '',
-    toDate: '',
+    memberId: "",
+    fromDate: "",
+    toDate: "",
   });
 
   const [data, setData] = useState([]);
@@ -17,16 +17,18 @@ const FundHistory = () => {
   };
 
   const handleSearch = () => {
-    setData([]);
+    // Implement filtering logic here if needed
+    // For now, just log it
+    console.log("Search triggered with filters:", filters);
   };
 
   const getAllFundRequestHistory = async () => {
     try {
-      const response = await getFundRequest();
-      const Data = response?.data
-      setData(Data);
+      const response = await getTransactionRequest();
+      console.log("Fetched transactions:", response?.transactions);
+      setData(response?.transactions || []);
     } catch (error) {
-      console.error('Error fetching fund requests:', error);
+      console.error("Error fetching fund requests:", error);
     }
   };
 
@@ -34,21 +36,20 @@ const FundHistory = () => {
     getAllFundRequestHistory();
   }, []);
 
-  const headers = ['#',
-    'Member Name',
-    'Account No',
-    'Bank Name',
-    'IFSC Code',
-    'Holder Name',
-    'Transaction ID',
-    'Date',
-    'Amount',
-    'Payment Proof',
-    'Status',];
+  const headers = [
+    "#",
+    "Member Name",
+    "Plan Name",
+    "Amount",
+    "Payment Id",
+    "Payment Status",
+    "Payment Method",
+    "Date",
+  ];
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-5 bg-white shadow-xl rounded-xl">
+      {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-5 bg-white shadow-xl rounded-xl">
         <div>
           <label className="block text-sm font-medium mb-1">Member ID:</label>
           <div className="flex">
@@ -99,44 +100,32 @@ const FundHistory = () => {
             Search
           </button>
         </div>
-      </div>
-      <div className="bg-white shadow-xl rounded-xl">
+      </div> */}
 
-        {/* Filters */}
-
-        {/* Table */}
+      <div className="bg-white shadow-xl rounded-xl mt-4">
         <TableComponent
-          title="Fund History"
+          title="User Transaction History"
           headers={headers}
           data={data}
-          searchKeys={['TransactionId', 'HolderName']}
-          searchKey="TransactionId and HolderName"
+          searchKeys={["paymentId"]}
+          searchKey="Payment ID"
           renderRow={(item, index) => (
             <>
               <td className="border p-2">{index + 1}</td>
-              <td className="border p-2">
-                {(item?.userId?.name?.firstName || '') + ' ' + (item?.userId?.name?.middleName || '') + ' ' + (item?.userId?.name?.lastName || '')}
-              </td>
-              <td className="border p-2">{item?.AccountNo}</td>
-              <td className="border p-2">{item?.BankName}</td>
-              <td className="border p-2">{item?.ifscCode}</td>
-              <td className="border p-2">{item?.HolderName}</td>
-              <td className="border p-2">{item?.TransactionId}</td>
-              <td className="border p-2">{new Date(item?.createdAt).toLocaleDateString()}</td>
+              <td className="border p-2">{item?.user?.name || "N/A"}</td>
+              <td className="border p-2">{item?.plan?.name || "N/A"}</td>
               <td className="border p-2">₹{item?.amount}</td>
+              <td className="border p-2">{item?.paymentId}</td>
+              <td className="border p-2">{item?.paymentStatus}</td>
+              <td className="border p-2">{item?.paymentMethod}</td>
               <td className="border p-2">
-                <a href={item?.paymentProof} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                  View
-                </a>
+                {new Date(item?.createdAt).toLocaleDateString()}
               </td>
-              <td className="border p-2">{item?.status}</td>
             </>
           )}
         />
-
       </div>
     </>
-
   );
 };
 

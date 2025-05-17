@@ -31,7 +31,7 @@ export const Routers = {
   productSummary: "/product-summary",
   addfund: "/add-fund",
   fundrequest: "/fund-request",
-  fundHistory: "/fund-history",
+  userTransactionHistory: "/user-transaction-history",
   walletholder: "/wallet-holder",
   teamsale: "/team-sale",
   orderhistory: "/order-history",
@@ -46,5 +46,6 @@ export const Routers = {
   allFranchiseeList: "/all-franchisee",
 
   createPlans: "/create-plans",
-  allPlans: "all-plans"
+  allPlans: "all-plans",
+  allPlansSales: "all-plans-sales",
 };

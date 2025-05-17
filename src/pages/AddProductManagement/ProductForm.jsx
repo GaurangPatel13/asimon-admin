@@ -13,7 +13,6 @@ const ProductForm = () => {
   });
 
   const [categories, setCategories] = useState([]);
-  console.log(categories)
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -48,7 +47,7 @@ const ProductForm = () => {
 
   // Append images (files)
   images.forEach((image) => {
-    formData.append("files", image); // must match Multer's field name
+    formData.append("images", image); // ✅ Correct field name
   });
 
   try {

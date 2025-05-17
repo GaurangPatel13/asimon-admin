@@ -39,7 +39,7 @@ export async function addProductForm(payload) {
 }
 
 export async function getAllProducts() {
-  const response = await Axios.get(`${apiUrl}/product/all-products`);
+  const response = await Axios.get(`${apiUrl}/get-product`);
   return response?.data;
 }
 
@@ -111,8 +111,8 @@ export async function addFund(data) {
   return response?.data;
 }
 
-export async function getFundRequest() {
-  const response = await Axios.get(`${apiUrl}/all-transactions`);
+export async function getTransactionRequest() {
+  const response = await Axios.get(`${apiUrl}/transaction-history`);
   return response?.data;
 }
 export async function createFranchiseeAPI(data) {
@@ -140,6 +140,11 @@ export async function createPlan(data) {
 
 export async function getAllPlansList() {
   const response = await Axios.get(`${apiUrl}/get-all-plans`);
+  return response?.data;
+}
+
+export async function getPlanSales() {
+  const response = await Axios.get(`${apiUrl}/plan-history`);
   return response?.data;
 }
 
