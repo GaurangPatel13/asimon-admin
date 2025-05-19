@@ -112,11 +112,11 @@ const FundHistory = () => {
           renderRow={(item, index) => (
             <>
               <td className="border p-2">{index + 1}</td>
-              <td className="border p-2">{item?.user?.name || "N/A"}</td>
+              <td className="border p-2 capitalize">{item?.user?.name.toLowerCase() || "N/A"}</td>
               <td className="border p-2">{item?.plan?.name || "N/A"}</td>
               <td className="border p-2">₹{item?.amount}</td>
               <td className="border p-2">{item?.paymentId}</td>
-              <td className="border p-2">{item?.paymentStatus}</td>
+              <td className="border p-2 capitalize">{item?.paymentStatus}</td>
               <td className="border p-2">{item?.paymentMethod}</td>
               <td className="border p-2">
                 {new Date(item?.createdAt).toLocaleDateString()}

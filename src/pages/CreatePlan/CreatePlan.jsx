@@ -51,10 +51,10 @@ export default function CreatePlan() {
   return (
     <>
       {loading && <PageLoader />}
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <div className="flex items-center justify-center bg-gray-100 p-6">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-8 rounded shadow-md w-full max-w-md"
+          className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md"
         >
           <h2 className="text-2xl font-bold mb-6">Create Plan</h2>
 
@@ -76,7 +76,7 @@ export default function CreatePlan() {
               name="amount"
               value={formData.amount}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-4 py-2"
+              className="mt-1 block w-full border rounded px-4 py-2 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
             />
           </label>
 
@@ -86,7 +86,7 @@ export default function CreatePlan() {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-4 py-2"
+              className="mt-1 block w-full border rounded px-4 py-2 resize-none"
             />
           </label>
 

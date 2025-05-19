@@ -48,4 +48,6 @@ export const Routers = {
   createPlans: "/create-plans",
   allPlans: "all-plans",
   allPlansSales: "all-plans-sales",
+  userIncomeHistory: "/user-income-history",
+  editProduct: "/edit-product/:id",
 };

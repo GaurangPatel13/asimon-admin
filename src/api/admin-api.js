@@ -43,21 +43,32 @@ export async function getAllProducts() {
   return response?.data;
 }
 
+export async function getProduct(id) {
+  const response = await Axios.get(`${apiUrl}/get-product-by/${id}`);
+  return response?.data;
+}
+
 export async function deleteProduct(id) {
-  const response = await Axios.delete(`${apiUrl}/deleteProduct/${id}`);
+  const response = await Axios.delete(`${apiUrl}/delete/${id}`);
+  return response?.data;
+}
+
+export async function editProduct(id, data, token) {
+  const response = await Axios.put(
+    `${apiUrl}/update-product/${id}`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   return response?.data;
 }
 
 export async function updateStockStatus(id) {
   const response = await Axios.put(`${apiUrl}/product/${id}/inStock`);
-  return response?.data;
-}
-
-export async function editProduct(id, data) {
-  const response = await Axios.put(
-    `${apiUrl}/product/updateproduct/${id}`,
-    data
-  );
   return response?.data;
 }
 
@@ -90,8 +101,13 @@ export async function updateUser(id, data) {
   return response?.data;
 }
 
+export async function updateDeliveryStatus(id, data) {
+  const response = await Axios.put(`${apiUrl}/orders/${id}`, data);
+  return response?.data;
+}
+
 export async function getAllOrders() {
-  const response = await Axios.get(`${apiUrl}/myOrders`);
+  const response = await Axios.get(`${apiUrl}/get-all-orders`);
   return response?.data;
 }
 
@@ -133,6 +149,11 @@ export async function getUsersStatus() {
   return response?.data;
 }
 
+export async function getOrderStatus() {
+  const response = await Axios.get(`${apiUrl}/order-sales-stats`);
+  return response?.data;
+}
+
 export async function createPlan(data) {
   const response = await Axios.post(`${apiUrl}/create-plan`, data);
   return response?.data;
@@ -145,6 +166,11 @@ export async function getAllPlansList() {
 
 export async function getPlanSales() {
   const response = await Axios.get(`${apiUrl}/plan-history`);
+  return response?.data;
+}
+
+export async function getIncomeHistory() {
+  const response = await Axios.get(`${apiUrl}/income-history`);
   return response?.data;
 }
 

@@ -1,31 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { BiEdit } from "react-icons/bi";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import ButtonWithIcon from "../../components/ButtonWithIcon";
+import { FaPencilAlt } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import TableComponent from "../../components/TableComponent";
-import {
-  deleteProduct,
-  getAllProducts,
-  updateStockStatus,
-} from "../../api/admin-api";
+import { deleteProduct, getAllProducts } from "../../api/admin-api";
 import Swal from "sweetalert2";
 import PageLoader from "../../components/ui/PageLoader";
-import ProductForm from "../AddProductManagement/ProductForm";
-import Modal from "../../components/Modal";
-import ToggleButton from "../../components/ToggleButton";
 
 const ProductSummary = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
         const response = await getAllProducts();
-        setProducts(response?.products);
+        setProducts(response?.products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -42,39 +34,35 @@ const ProductSummary = () => {
     "Image",
     "MRP",
     "Stock",
-    "Active",
+    "Actions",
   ];
 
   const handleDelete = async (id) => {
-    try {
-      setLoading(true);
-      await deleteProduct(id);
-      setProducts((prev) => prev.filter((p) => p._id !== id));
-      Swal.fire("Deleted!", "Product has been deleted.", "success");
-    } catch (err) {
-      console.error("Delete error:", err);
-    } finally {
-      setLoading(false);
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This product will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        setLoading(true);
+        await deleteProduct(id);
+        setProducts((prev) => prev.filter((p) => p._id !== id));
+        Swal.fire("Deleted!", "Product has been deleted.", "success");
+      } catch (err) {
+        console.error("Delete error:", err);
+        Swal.fire("Error", "Failed to delete product.", "error");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
-  const handleStockStatus = async (id) => {
-    try {
-      setLoading(true);
-      await updateStockStatus(id);
-      setProducts((prev) =>
-        prev.map((p) => (p._id === id ? { ...p, isActive: !p.isActive } : p))
-      );
-    } catch (err) {
-      console.error("Stock status error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleEdit = (product) => {
-    setSelectedProduct(product);
-    setModalOpen(true);
+  const handleEditClick = (id) => {
+    navigate(`/edit-product/${id}`);
   };
 
   return (
@@ -106,26 +94,29 @@ const ProductSummary = () => {
                     "No Image"
                   )}
                 </td>
-                <td className="border p-2">{item?.mrp}</td>
+                <td className="border p-2">₹{item?.mrp}</td>
                 <td className="border p-2">{item?.stock}</td>
                 <td className="border p-2">
-                  <ToggleButton
-                    isEnabled={item?.isActive}
-                    onToggle={() => handleStockStatus(item._id)}
-                  />
+                  <div className="flex gap-2">
+                    <button
+                      className="bg-blue-500 text-white p-2 rounded text-sm"
+                      onClick={() => handleEditClick(item._id)}
+                    >
+                      <FaPencilAlt />
+                    </button>
+                    <button
+                      className="bg-red-500 text-white p-2 rounded text-sm"
+                      onClick={() => handleDelete(item._id)}
+                    >
+                      <MdDeleteForever />
+                    </button>
+                  </div>
                 </td>
               </>
             )}
           />
         </div>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        title="Update Product"
-      >
-        <ProductForm productData={selectedProduct} isEditMode={true} />
-      </Modal>
     </>
   );
 };

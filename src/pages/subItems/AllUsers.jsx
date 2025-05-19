@@ -98,8 +98,8 @@ const AllUsers = () => {
               </td>
               <td className="border-r border-b border-text-white/40 p-2 md:p-3">{item?.email}</td>
 
-              <td className="border-r border-b border-text-white/40 p-2 md:p-3">
-                {item?.name}
+              <td className="border-r border-b border-text-white/40 p-2 md:p-3 capitalize">
+                {item?.name.toLowerCase()}
               </td>
 
               <td className="border-r border-b border-text-white/40 p-2 md:p-3">

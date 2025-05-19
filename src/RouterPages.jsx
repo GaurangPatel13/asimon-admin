@@ -39,6 +39,8 @@ import ProductSummary from "./pages/subItems/ProductSummary";
 import CreatePlan from "./pages/CreatePlan/CreatePlan";
 import AllPlans from "./pages/CreatePlan/AllPlans";
 import PlanSales from "./pages/CreatePlan/PlanSales";
+import UserIncomeHistory from "./pages/subItems/UserIncomeHistory";
+import EditProduct from "./pages/AddProductManagement/EditProduct";
 
 
 const RoutersPages = () => {
@@ -68,7 +70,8 @@ const RoutersPages = () => {
 
               <Route path={Routers.ProductList} element={<ProductList />} />
 
-              <Route path={Routers.AddProduct} element={<AddProduct />} />
+                <Route path={Routers.AddProduct} element={<AddProduct />} />
+                <Route path={Routers.editProduct} element={<EditProduct />} />
               <Route path={Routers.AllWidthdrawals} element={<AllWidthdrawal />} />
 
 
@@ -91,6 +94,7 @@ const RoutersPages = () => {
               <Route path={Routers.productSummary} element={<ProductSummary />} />
               <Route path={Routers.addfund} element={<AddFund />} />
               <Route path={Routers.userTransactionHistory} element={<FundHistory />} />
+              <Route path={Routers.userIncomeHistory} element={<UserIncomeHistory />} />
               <Route path={Routers.fundrequest} element={<FundRequest />} />
               <Route path={Routers.walletholder} element={<WalletHolder />} />
               <Route path={Routers.teamsale} element={<TeamSale />} />
