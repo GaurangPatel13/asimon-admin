@@ -106,7 +106,7 @@ const OrderHistory = () => {
       <td className="border-r whitespace-nowrap border-b p-2 md:p-3">{formatDateonly(item?.createdAt)}</td>
       <td className="border-r whitespace-nowrap border-b p-2 md:p-3 capitalize">{item?.userId?.name?.toLowerCase()}</td>
       <td className="border-r whitespace-nowrap border-b p-2 md:p-3">
-        {`${item.address.addressLine1}, ${item.address.city}, ${item.address.state}, ${item.address.country}, ${item.address.pincode}`}
+        {`${item?.address?.addressLine1}, ${item?.address?.city}, ${item?.address?.state}, ${item?.address?.country}, ${item?.address?.pincode}`}
       </td>
       <td className="border-r whitespace-nowrap border-b p-2 md:p-3">
         {item.items?.map(i => `${i.product?.name} (x${i.quantity})`).join(", ")}

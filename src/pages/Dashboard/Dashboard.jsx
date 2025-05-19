@@ -53,7 +53,7 @@ const Dashboard = () => {
     },
     {
   title: "Today Sale",
-  value: dashboardStats1?.todaySale || 0,
+  value: dashboardStats1?.todaySale?.toFixed(2) || 0,
   symbol: "₹",
   status: "down",
   path: Routers.orderhistory,
@@ -62,7 +62,7 @@ const Dashboard = () => {
 
     {
       title: "Current Month Sale",
-      value: dashboardStats1?.currentMonthSale || 0,
+      value: dashboardStats1?.currentMonthSale?.toFixed(2) || 0,
       symbol: "₹",
       // change: "+8%",
       status: "down",
@@ -71,7 +71,7 @@ const Dashboard = () => {
     },
     {
       title: "Total Shopping",
-      value: dashboardStats1?.totalShopping || 0,
+      value: dashboardStats1?.totalShopping?.toFixed(2) || 0,
       symbol: "₹",
       // change: "+8%",
       status: "down",
