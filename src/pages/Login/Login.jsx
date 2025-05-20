@@ -84,7 +84,7 @@ const Login = () => {
     <>
       {loading && <PageLoader />}
       <div
-        className="w-screen h-screen xl:p-20 flex items-center lg:p-16 md:p-10 p-4"
+        className="w-screen h-screen xl:p-20 flex items-center justify-center lg:p-16 md:p-10 p-4"
         style={{
           backgroundImage: `url(${img})`,
           backgroundSize: "cover",

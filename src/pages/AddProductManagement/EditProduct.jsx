@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -6,8 +6,10 @@ import { backendConfig } from "../../constants/mainContent";
 import { editProduct, getProduct } from "../../api/admin-api";
 
 const EditProduct = () => {
-  const { id } = useParams(); // Get product ID from route
+  const { id } = useParams();
   const navigate = useNavigate();
+  const fileInputRef = useRef();
+
   const [form, setForm] = useState({
     name: "",
     category: "",
@@ -17,11 +19,10 @@ const EditProduct = () => {
   });
 
   const [categories, setCategories] = useState([]);
-  const [images, setImages] = useState([]); // New images to upload
-  const [existingImages, setExistingImages] = useState([]); // Already uploaded images
+  const [images, setImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Fetch product by ID
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,13 +50,10 @@ const EditProduct = () => {
     fetchData();
   }, [id]);
 
-  // Fetch category options
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(
-          `${backendConfig.base}/admin/categories`
-        );
+        const { data } = await axios.get(`${backendConfig.base}/admin/categories`);
         setCategories(data?.data);
       } catch (err) {
         console.error("Failed to fetch categories", err);
@@ -66,7 +64,25 @@ const EditProduct = () => {
   }, []);
 
   const handleImageChange = (e) => {
-    setImages(Array.from(e.target.files));
+    const selectedFiles = Array.from(e.target.files);
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+    const validFiles = selectedFiles.filter((file) => allowedTypes.includes(file.type));
+
+    if (validFiles.length !== selectedFiles.length) {
+      Swal.fire({
+        icon: "warning",
+        title: "Invalid file type",
+        text: "Only JPEG, JPG, and PNG images are allowed.",
+      });
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      setImages([]);
+      return;
+    }
+
+    setImages(validFiles);
   };
 
   const handleSubmit = async (e) => {
@@ -94,7 +110,7 @@ const EditProduct = () => {
         confirmButtonText: "OK",
       });
 
-      navigate("/product-summary"); // Redirect after update
+      navigate("/product-summary");
     } catch (error) {
       console.error("Update error:", error);
       Swal.fire("Error", "Failed to update product.", "error");
@@ -129,7 +145,7 @@ const EditProduct = () => {
           <label className="block font-medium mb-1">Category</label>
           <input
             type="text"
-            name="name"
+            name="category"
             value={form.category}
             onChange={handleChange}
             className="w-full border px-3 py-2 rounded"
@@ -158,9 +174,10 @@ const EditProduct = () => {
           <label className="block font-medium mb-1">Upload New Images</label>
           <input
             type="file"
-            accept="image/*"
+            accept=".jpeg, .jpg, .png"
             multiple
             onChange={handleImageChange}
+            ref={fileInputRef}
             className="w-full"
           />
         </div>
@@ -171,7 +188,7 @@ const EditProduct = () => {
               <img
                 key={i}
                 src={img}
-                alt="Existing"
+                alt={`Product Image ${i + 1}`}
                 className="w-16 h-16 object-cover border rounded"
               />
             ))}
