@@ -41,6 +41,7 @@ import AllPlans from "./pages/CreatePlan/AllPlans";
 import PlanSales from "./pages/CreatePlan/PlanSales";
 import UserIncomeHistory from "./pages/subItems/UserIncomeHistory";
 import EditProduct from "./pages/AddProductManagement/EditProduct";
+import WithdrawRequest from "./pages/WithdrawRequest";
 
 
 const RoutersPages = () => {
@@ -73,6 +74,7 @@ const RoutersPages = () => {
                 <Route path={Routers.AddProduct} element={<AddProduct />} />
                 <Route path={Routers.editProduct} element={<EditProduct />} />
               <Route path={Routers.AllWidthdrawals} element={<AllWidthdrawal />} />
+              <Route path={Routers.withdrawalRequest} element={<WithdrawRequest />} />
 
 
               {/* <Route path={Routers.AllUsers} element={<VendorManagement />} /> */}

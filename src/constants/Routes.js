@@ -50,4 +50,5 @@ export const Routers = {
   allPlansSales: "all-plans-sales",
   userIncomeHistory: "/user-income-history",
   editProduct: "/edit-product/:id",
+  withdrawalRequest: "/withdrawal-request",
 };

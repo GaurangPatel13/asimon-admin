@@ -183,3 +183,24 @@ export async function deletePlan(id) {
   const response = await Axios.delete(`${apiUrl}/delete-plan/${id}`);
   return response?.data;
 }
+
+export async function getWithdrawRequest() {
+  const response = await Axios.get(`${apiUrl}/wallet-pending`);
+  return response?.data;
+}
+
+export async function approveWithdrawal(withdrawalId, transactionId) {
+  const response = await Axios.post(`${apiUrl}/wallet-approve`, {
+    withdrawalId,
+    transactionId
+  });
+  return response?.data;
+}
+
+export async function rejectWithdrawal(withdrawalId, reason) {
+  const response = await Axios.post(`${apiUrl}/wallet-reject`, {
+    withdrawalId,
+    reason
+  });
+  return response?.data;
+}

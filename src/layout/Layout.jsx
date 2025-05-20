@@ -151,6 +151,22 @@ const Layout = () => {
       ],
     },
     {
+      label: "Withdrawal Request",
+      icon: <MdOutlineRequestQuote />,
+      subRoutes: [
+        {
+          label: "Widdrawal Request",
+          path: `${Routers.withdrawalRequest}`,
+          icon: <AiOutlineHistory size={16} />,
+        },
+        // {
+        //   label: "Wallet Holder ",
+        //   path: `${Routers.walletholder}`,
+        //   icon: <FaWallet size={16} />,
+        // },
+      ],
+    },
+    {
       label: "Order sales",
       icon: <GrMoney />,
       subRoutes: [
