@@ -70,11 +70,11 @@ const Layout = () => {
       label: "Plans",
       icon: <MdAutoGraph />,
       subRoutes: [
-        {
-          label: "Create Plans",
-          path: `${Routers.createPlans}`,
-          icon: <MdAutoGraph size={16} />,
-        },
+        // {
+        //   label: "Create Plans",
+        //   path: `${Routers.createPlans}`,
+        //   icon: <MdAutoGraph size={16} />,
+        // },
         {
           label: "All Plans",
           path: `${Routers.allPlans}`,
